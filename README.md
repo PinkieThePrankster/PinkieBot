@@ -1,4 +1,4 @@
-CompuBot
+PinkieBot
 ======
 
 This is a port of phenny, a Python IRC bot, to Python3. It has been forked from [JordanKinsley](https://github.com/JordanKinsley)'s [PinkiePyBot](https://github.com/JordanKinsley/PinkiePyBot) port.
@@ -12,6 +12,7 @@ core modules have been ported.
 Requirements
 ------------
 
+This fork of CompuBot is changed to run on Windows. The file seen.py is different to fix how Windows handles outputs.
 CompuBot runs on a Ubuntu 14.04 LTS server and therefore doesn't get tested on other platforms*. You will need the latest version of Python 3.4 (which can be installed with `sudo apt-get install python3-all python3-all-dev`). Due to a new feature of lists, it is recommended that Python 3.3 or later be used. It is not required, but highly recommended. We thankfully no longer require the use of lxml or BeautifulSoup thanks to the JSON APIs of several sites. 
 
 * CompuBot can run on Windows as long as Python 3.2 or later is installed. It's recommended to use the lastest version of Python to avoid the issues described above. 
