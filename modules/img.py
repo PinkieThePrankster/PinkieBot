@@ -3,6 +3,7 @@
 img.py - PinkiePyBot character image storage module
 (C) 2012 Jordan T Kinsley (jordan@jordantkinsley.org)
 GPLv2 or later
+
 This module will store an image for a roleplay character. 
 By image I of course mean link, because screw DCC. 6_9
 '''
