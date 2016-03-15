@@ -11,7 +11,7 @@ Modified by Jordan Kinsley <jordan@jordantkinsley.org>
 
 import random
 
-saucyreplies = ('Kinsley','MalevolentSpoon','Aurora','Cocoa','TiredFoal','Lapsus','Compu','Ace','Firestar','cloppyhooves','Connor','princesssluttershy','plushie_pegasus','IceFlurries','Shroo','Giggles','eytosh','iamalion','weisey','CompuDesktop')
+saucyreplies = ('PTP','PinkiePie','Midnight','Smoke','Roxy','Boo','Berry_Smooth','Compu','TempestStorm','CompuDesktop','SoarinPegasus')
 
 def hello(phenny, input): 
     if input.nick in phenny.config.user_ignore:
@@ -173,12 +173,32 @@ def cookie(phenny, input):
         phenny.say(cookieresponse)
 cookie.rule = r'(?i)(($nickname(:|,)? )?(C|c)ookies (P|p)lease(\?)?)|(?i)(($nickname(:|,)? )?(((C|c)an (I|i))|((I|i) (C|c)an)) (((H|h)ave)|((H|h)a(s|z))) (C|c)ookie(s)?( (P|p)lease)?(\?)?)'
 
+def oface(phenny, input):
+    if input.nick not in saucyreplies:
+        return
+    elif input.nick == "TaiFenn":
+        ofaceresponse = ('\x01ACTION snuggles up with ' + input.nick + ', feeding her muffins slowly while nuzzling and purring\x01')
+    else:
+        ofaceresponse = ('\x01ACTION shoves a muffin into ' + input.nick + "'s mouth\x01")
+    phenny.say(ofaceresponse)
+oface.rule = r'oOo'
+
+def valday(phenny, input):
+    if input.nick == "Sylus":
+        valdayresponse = ('\x01ACTION takes ' + input.nick + ' by the hoof, leading them to the bedroom to make sweet, slow love.\x01')
+    elif input.nick in saucyreplies:
+        valdayresponse = random.choice(('I would love to!','\x01ACTION squees and glomps ' + input.nick + ' \x01','But of course, you sexy thing you!~<3','\x01ACTION gigglesnorts and kisses ' + input.nick + ' passionately\x01','\x01ACTION rolls ' + input.nick + ' over and ravishes them right then and there, cowmare style!\x01','\x01ACTION giggles and pushes ' + input.nick + ' to the floor and kisses them.\x01', '\x01ACTION giggles and takes ' + input.nick + '\'s hoof, and leads them to private room.\x01'))
+    else:
+        valdayresponse = random.choice(('Umm.. I do not like you in that way..','\x01ACTION rolls on the floor, laughing.\x01','\x01ACTION gigglesnorts\x01','\x01ACTION blushes at ' + input.nick + ' ,but shakes her head, flattered at the thought!\x01','I will think about it..'))
+    phenny.say(valdayresponse)
+valday.rule = r'(?i)(($nickname(:|,)? )?(W|w)ill you be my valentine?(\?)?)|(?i)(($nickname(:|,)? )?(W|w)ill you be my special somepony?(\?)?)'
+
 #def boopcommand(phenny, input):
 #    if input.nick in phenny.config.user_ignore:
 #        return
 #    boopcommandresponse = random.choice(('\x01ACTION boops '))
 #    phenny.say(boopcommandresponse)
-#boopcommand.rule = (r'(?i)(CompuBot(:|,)? )?boop [^\s]+')
+#boopcommand.rule = (r'(?i)($nickname(:|,)? )?boop [^\s]+')
 
 # TODO: add these actions and appropriate responses
 '''

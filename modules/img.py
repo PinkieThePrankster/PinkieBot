@@ -3,7 +3,6 @@
 img.py - PinkiePyBot character image storage module
 (C) 2012 Jordan T Kinsley (jordan@jordantkinsley.org)
 GPLv2 or later
-
 This module will store an image for a roleplay character. 
 By image I of course mean link, because screw DCC. 6_9
 '''
@@ -73,13 +72,15 @@ store.conn = None # these variables MUST be named with the function, other they 
 store.thread = False
 
 def add(phenny, input):
-    '''.add [<character>] <image url> - Adds an image URL for a given character. 
+    '''.add [<character>] <url> - Adds an image URL for a given character. 
     The URL must have http in it.'''
     if not input.sender.startswith('#'): 
         phenny.reply('This is a channel-only command. Please try again in a channel.')
     channel = input.sender
     nick = input.nick
     
+    if not input.group(2):
+        return phenny.say("Usage .add <name> <url>")
     # get the url from the input
     try: 
         character, url = input.group(2).split()
@@ -191,6 +192,9 @@ def delete(phenny, input):
     nick = input.nick
     character = input.group(2)
     
+    if not input.group(2):
+        return phenny.say("Usage .del <name>")
+    
     char_entry = get_character(phenny, character, channel)
     if char_entry is None:
         phenny.say("Sowwy, but I don't remember anything by that name! Are you sure that you stored it? Pwease don't be mad at me! :(")
@@ -222,6 +226,9 @@ def get(phenny, input):
     channel = input.sender
     character = input.group(2)
     
+    
+    if not input.group(2):
+        return phenny.say("Usage .get <name>")
     sqlitedata = {
         'channel': channel,
         'character': character,

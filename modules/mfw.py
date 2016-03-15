@@ -42,6 +42,8 @@ mlfw.commands = ('mlfw', 'mfw')
 
 def dawg(phenny, input):
     """http://knowyourmeme.com/memes/xzibit-yo-dawg (.dawg <1>, <2>) I heard you like <1> so I put a <1> in your <1> so you can <2> while you <2>"""
+    if input.nick in phenny.config.user_ignore:
+        return
     q = input.group(2)
     if q:
         words = q.split(', ')

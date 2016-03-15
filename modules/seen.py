@@ -99,6 +99,11 @@ def seen(phenny, input):
             phenny.say(nick + " was last seen leaving " + channel + ' with message "' + message + '" on ' + seentime)
         elif event == "QUIT":
             phenny.say(nick + ' was last seen quitting with message "' + message + '" on ' + seentime)
+        elif event == "NICK":
+            phenny.say(nick + ' was last seen switching to the nick ' + channel + ' on ' + seentime)
+        elif event == "KICK":
+            messagekick = message.split("----------")
+            phenny.say(nick + ' was last seen being kicked by ' + messagekick[1] + ' in ' + channel + ' with message "' + messagekick[0] + '" on ' + seentime)
     if gotresults == True:
         c.close()
 seen.commands = ['seen']
@@ -106,11 +111,23 @@ seen.example = ".seen somenick"
 
 def seenstore(phenny, input, event):
     nick = input.nick
-    channel = input.sender
-    if event == "JOIN":
-        message = None
+    if event == "QUIT" or event == "NICK":
+        channel = "None"
+    else:
+        channel = input.sender
+    if event == "JOIN" or event == "NICK":
+        message = "None"
     else:
         message = input.group()
+    if event == "NICK":
+        channel = input.group()
+    if event == "KICK":
+        args = input.args
+        kicker = input.nick
+        nick = args[1]
+        message = message + "----------" + kicker
+        
+        
     seen_db = os.path.join(os.path.expanduser('~/.phenny'), 'seen.db')
     seen_conn = db_connect(seen_db)
     conn = db_connect(seen_db)
@@ -134,16 +151,30 @@ seenmsg.priority = 'low'
 #seenjoin.rule = r'(.*)'
 #seenjoin.priority = 'low'
 
-#def seenquit(phenny, input):
-#    event = "QUIT"
-#    seenstore(phenny, input, event)
-#seenquit.event = 'QUIT'
-#seenquit.rule = r'(.*)'
-#seenquit.priority = 'low'
+def seennick(phenny, input):
+    event = "NICK"
+    seenstore(phenny, input, event)
+seennick.event = "NICK"
+seennick.rule = r'(.*)'
+seennick.priority = 'low'
 
-#def seenpart(phenny, input):
-#    event = "PART"
-#    seenstore(phenny, input, event)
-#seenpart.event = 'PART'
-#seenpart.rule = r'(.*)'
-#seenpart.priority = 'low'
+def seenkick(phenny, input):
+    event = "KICK"
+    seenstore(phenny, input, event)
+seenkick.event = "KICK"
+seenkick.rule = r'(.*)'
+seenkick.priority = 'low'
+
+def seenquit(phenny, input):
+    event = "QUIT"
+    seenstore(phenny, input, event)
+seenquit.event = 'QUIT'
+seenquit.rule = r'(.*)'
+seenquit.priority = 'low'
+
+def seenpart(phenny, input):
+    event = "PART"
+    seenstore(phenny, input, event)
+seenpart.event = 'PART'
+seenpart.rule = r'(.*)'
+seenpart.priority = 'low'
